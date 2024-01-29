@@ -9,6 +9,9 @@ class Board:
         else:
             self.size = size
             self.board = np.zeros((self.size, self.size*2))
+            for i in range(self.size):
+                for j in range(self.size*2):
+                    self.board[i, j] = random.randint(0, 1)
 
     def __str__(self):
         rep = " "
