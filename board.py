@@ -3,6 +3,7 @@ import random
 
 class Board:
     def __init__(self, size=20, initial_state=1):
+        self.generation = 0  # Initialize generation counter
         if isinstance(initial_state, int)==False: 
             self.size = initial_state.shape[0]
             self.board = initial_state
@@ -14,7 +15,7 @@ class Board:
                     self.board[i, j] = random.randint(0, 1)
 
     def __str__(self):
-        rep = " "
+        rep = "Generation: " + str(self.generation) + "\n "  # Display the current generation
         rep += "-" * self.size*2
         rep += "\n"
         for i in range(self.size):
@@ -49,3 +50,4 @@ class Board:
         for i in range(self.size):
             for j in range(self.size*2):
                 self.board[i, j] = 1 - self.board[i, j] if changes[i, j]==1 else self.board[i, j]
+        self.generation += 1  # Increment the generation counter after each update
