@@ -4,9 +4,18 @@ from board import Board  # Assuming there's a custom Board class defined in the 
 import keyboard
 import time
 
-def Run():
+def configure_game():
+    
     max_gen = int(input("Enter the maximum number of generations (0 for unlimited): "))
+    #You can add all the confiogurations you need
+    return max_gen
+
+
+
+def Run():
+    max_gen = configure_game()    
     start = time.time()
+
     myboard = Board()  # Creating an instance of the Board class
     stop = False
     while not keyboard.is_pressed('Escape') and (max_gen == 0 or myboard.generation < max_gen):
