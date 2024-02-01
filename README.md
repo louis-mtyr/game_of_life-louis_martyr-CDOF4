@@ -10,3 +10,11 @@ To play the game, run the game.py file.
 When you want to stop the game, you can press the 'escape' key.
 
 You can modify the board.py or the game.py file to add some changes.
+
+
+## Installation
+
+To play this game, you need to install the keyboard library. Run the following command in your terminal:
+
+```bash
+pip install keyboard
