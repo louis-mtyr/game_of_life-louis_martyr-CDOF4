@@ -15,13 +15,13 @@ class Board:
                     self.board[i, j] = random.randint(0, 1)
 
     def __str__(self):
-        rep = "Generation: " + str(self.generation) + "\n "  # Display the current generation
+        rep = "Generation: " + str(self.generation + 1) + "\n "  # Display the current generation
         rep += "-" * self.size*2
         rep += "\n"
         for i in range(self.size):
             rep += "|"
             for j in range(self.size*2):
-                rep += "#" if self.board[i, j]==1 else " "
+                rep += "▪" if self.board[i, j]==1 else " "
             rep += "|\n"
         rep += " "
         rep += "-" * self.size*2
@@ -31,18 +31,21 @@ class Board:
         cnt=0
         for i in range(-1, 2):
             for j in range(-1, 2):
-                if x+i >= 0 and x+i < self.size and y+i >= 0 and y+i < self.size*2:
-                    if self.board[x+i, y+i]==1: cnt+=1
+                if x+i >= 0 and x+i < self.size and y+j >= 0 and y+j < self.size*2:
+                    if i!=0 or j!=0:
+                        if self.board[x+i, y+j]==1: 
+                            cnt+=1
         return cnt
 
     def Changes(self):
         changes = np.zeros((self.size, self.size*2))
         for i in range(self.size):
             for j in range(self.size*2):
-                if self.board[i, j]==1 and (self.Get_neighbors(i,j)<2 or self.Get_neighbors(i,j)>3):
-                    changes[i, j]=1
-                if self.board[i, j]==0 and self.Get_neighbors(i,j)==3:
-                    changes[i, j]=1
+                neighbors = self.Get_neighbors(i, j)
+                if self.board[i, j] == 1 and (neighbors < 2 or neighbors > 3):
+                    changes[i, j] = 1
+                if self.board[i, j] == 0 and neighbors == 3:
+                    changes[i, j] = 1
         return changes
 
     def Actualize(self):

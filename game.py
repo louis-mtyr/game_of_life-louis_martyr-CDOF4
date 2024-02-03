@@ -4,18 +4,23 @@ from board import Board  # Assuming there's a custom Board class defined in the 
 import keyboard
 import time
 
-def Run(board_size):
+def configure_game():
+    print("What size of board do you want to use ? (The format will be n x 2n)")
+    board_size = input("Pick a positive integer: ")
+    while board_size.isnumeric()==False:
+        board_size = input("Pick a positive integer: ")
+    board_size = int(board_size)
     initial_state = 1
-    custom_state = input("Do you want to go with a random start ? (y/N)")
+    custom_state = input("Do you want to go with a random start ? (Y/n)")
     if custom_state.upper() == "N":
-        size, initial_state = CustomBoard()
+        initial_state = CustomBoard(board_size)
         
     max_gen = int(input("Enter the maximum number of generations (0 for unlimited): "))
     #You can add all the confiogurations you need
-    return max_gen
+    return max_gen, initial_state, board_size
 
 def Run():
-    max_gen = configure_game()    
+    max_gen, initial_state, board_size = configure_game()    
     start = time.time()
     myboard = Board(size = board_size, initial_state = initial_state)
     stop = False
@@ -28,8 +33,7 @@ def Run():
     # Prompt the user to press Enter to continue
     input("Press Enter to close the console...")
     
-def CustomBoard():
-    size = int(input("Choose the grid size (5 for 2*5 x 5 grid)"))
+def CustomBoard(size):
     initial_state = np.zeros((size, size*2))
 
     # Get user input for the initial state
@@ -42,5 +46,6 @@ def CustomBoard():
             
         initial_state[i] = [int(cell) for cell in row_input]
     
-    return size, initial_state
-Run(20)
+    return initial_state
+
+Run()
